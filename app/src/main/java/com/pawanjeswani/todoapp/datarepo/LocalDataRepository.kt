@@ -30,8 +30,8 @@ class LocalDataRepository {
     }
 
 
-    fun deleteAllEntries(NoteData: NoteData){
-        appDatabase!!.todoDao.deleteAllNotes(NoteData)
+    fun deleteAllEntries(){
+        appDatabase!!.todoDao.deleteAllNotes(NoteData())
     }
 
     fun getAllNotes(): LiveData<List<NoteData>> {
@@ -42,8 +42,16 @@ class LocalDataRepository {
         return appDatabase!!.todoDao.getNoteWithId(noteId = noteId)
     }
 
-    fun deleteNoteWithId(noteId:String){
-        return appDatabase!!.todoDao.deleteNoteWithId(noteId = noteId)
+    fun deleteNoteWithId(noteId:String, listener: DbQueryListener){
+        val mHandlerThread = HandlerThread("Handler")
+        mHandlerThread.start()
+        val handler = Handler(mHandlerThread.looper)
+        val runnable = {
+            appDatabase!!.todoDao.deleteNoteWithId(noteId = noteId)
+            listener.onSuccess()
+        }
+        handler.post(runnable)
+
     }
 
     companion object {
