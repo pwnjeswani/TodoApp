@@ -5,7 +5,9 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.ViewSwitcher
 import androidx.recyclerview.widget.RecyclerView
 import com.pawanjeswani.todoapp.R
 import com.pawanjeswani.todoapp.model.dbtables.NoteData
@@ -13,18 +15,21 @@ import kotlin.math.roundToInt
 
 
 class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    //notes list will be stored in this var
     private var noteList = mutableListOf<NoteData>()
+    //context variable
     var mContext: Context? = null
-
 
     constructor(context: Context) {
         this.mContext = context
     }
 
     fun setNotes(notesList:ArrayList<NoteData>){
+        //clearing the existing data
         this.noteList.clear()
+        //adding the new data
         noteList.addAll(notesList)
+        //notifying the adapter that data is changed
         notifyDataSetChanged()
     }
 
@@ -40,22 +45,30 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var holderr = holder as NoteViewHolder
+        //setting last item's bottom padding
         if (position == noteList.size - 1) {
             holderr.itemView.setPadding(0,0,0,dpToPx(15,mContext!!))
         }
+        //passing the respective note data to bind
         holderr.bind(noteList[position])
+
+        holderr.vwSwTitle.setOnClickListener {
+            //user can change the title by clicking on this
+            holderr.vwSwTitle.nextView
+        }
     }
 
-    private open inner class NoteViewHolder internal constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+    private open inner class NoteViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var tvNoteTitle: TextView = itemView.findViewById(R.id.tv_note_title)
+        internal var etNoteTitle: EditText = itemView.findViewById(R.id.et_note_title)
+        internal var vwSwTitle: ViewSwitcher = itemView.findViewById(R.id.vw_sw_title)
         internal var tvNoteContent: TextView = itemView.findViewById(R.id.tv_note_content)
         internal var tvNoteDate: TextView = itemView.findViewById(R.id.tv_note_date)
 
         internal fun bind(note: NoteData) {
-           tvNoteTitle.text = "Title"
            tvNoteContent.text = note.noteContent
            tvNoteDate.text = note.date
+            etNoteTitle.isEnabled = true
         }
     }
 
