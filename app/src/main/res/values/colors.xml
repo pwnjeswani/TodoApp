@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#2A56C6</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="black">#000</color>
+    <color name="white">#FFF</color>
+    <color name="card_border_clr">#EDEDED</color>
+    <color name="note_date_txt_clr">#7F7F7F</color>
+    <color name="note_title_txt_clr">#2A56C6</color>
+    <color name="submit_btn_clr">#00CD83</color>
 </resources>
