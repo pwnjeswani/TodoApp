@@ -1,6 +1,7 @@
 package com.pawanjeswani.todoapp.view.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,10 @@ import android.widget.ViewSwitcher
 import androidx.recyclerview.widget.RecyclerView
 import com.pawanjeswani.todoapp.R
 import com.pawanjeswani.todoapp.model.dbtables.NoteData
+import com.pawanjeswani.todoapp.util.Constants.Companion.NOTE_DATA
+import com.pawanjeswani.todoapp.util.Constants.Companion.REQUEST_EDIT
+import com.pawanjeswani.todoapp.view.activity.EditNoteActivity
+import com.pawanjeswani.todoapp.view.activity.MainActivity
 import kotlin.math.roundToInt
 
 
@@ -52,10 +57,22 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //passing the respective note data to bind
         holderr.bind(noteList[position])
 
-        holderr.vwSwTitle.setOnClickListener {
+        holderr.tvNoteTitle.setOnClickListener {
             //user can change the title by clicking on this
             holderr.vwSwTitle.nextView
+            holderr.etNoteTitle.requestFocus()
         }
+
+        holderr.itemView.setOnClickListener {
+            openEditNoteAct(position)
+        }
+
+    }
+
+    private fun openEditNoteAct(position: Int) {
+        var intent = Intent(mContext,EditNoteActivity::class.java)
+        intent.putExtra(NOTE_DATA,noteList[position])
+        (mContext as MainActivity).startActivityForResult(intent,REQUEST_EDIT)
     }
 
     private open inner class NoteViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,7 +85,6 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         internal fun bind(note: NoteData) {
            tvNoteContent.text = note.noteContent
            tvNoteDate.text = note.date
-            etNoteTitle.isEnabled = true
         }
     }
 

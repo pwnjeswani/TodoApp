@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.pawanjeswani.todoapp.R
 import com.pawanjeswani.todoapp.model.dbtables.NoteData
+import com.pawanjeswani.todoapp.util.Constants.Companion.REQUEST_CREATE_NEW
+import com.pawanjeswani.todoapp.util.Constants.Companion.REQUEST_EDIT
 import com.pawanjeswani.todoapp.view.adapter.NotesAdapter
 import com.pawanjeswani.todoapp.viewmodel.TodoViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,8 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var todoViewModel: TodoViewModel
-    val REQUEST_CREATE_NEW = 1
-    val REQUEST_EDIT = 2
     var notesAdapter: NotesAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             if(it.isEmpty() || it !=null){
                 //got saved notes hence passing it to adapter
                 passToAdapter(it)
-                Toast.makeText(this,"${it.size}", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this,"${it.size}", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 REQUEST_EDIT -> {
                     //editted successfully hence updating the rv
+                    fetchNotes()
                 }
             }
         }

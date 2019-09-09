@@ -15,7 +15,7 @@ interface TodoDao {
     /**
      * fetching all notes sorted by date
      */
-    @Query("SELECT * from NoteData Order by date ASC")
+    @Query("SELECT * from NoteData Order by date DESC")
     fun getAllNotes(): LiveData<List<NoteData>>
 
     /**

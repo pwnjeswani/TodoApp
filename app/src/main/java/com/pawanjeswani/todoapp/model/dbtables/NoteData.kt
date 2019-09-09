@@ -2,9 +2,10 @@ package com.pawanjeswani.todoapp.model.dbtables
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
-class NoteData{
+class NoteData: Serializable{
     @PrimaryKey
     var noteId:String = ""
     var noteContent : String?=null
