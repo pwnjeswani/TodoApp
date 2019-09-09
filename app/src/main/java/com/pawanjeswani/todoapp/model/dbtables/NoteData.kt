@@ -10,5 +10,4 @@ class NoteData{
     var noteContent : String?=null
     var noteTitle : String=""
     var date : String?=null
-    var uploaded: Boolean = false
 }

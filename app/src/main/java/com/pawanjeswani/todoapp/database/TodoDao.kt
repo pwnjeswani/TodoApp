@@ -12,7 +12,7 @@ import com.pawanjeswani.todoapp.model.dbtables.NoteData
 @Dao
 interface TodoDao {
 
-    @Query("SELECT * from NoteData")
+    @Query("SELECT * from NoteData Order by date ASC")
     fun getAllNotes(): LiveData<List<NoteData>>
 
     @Insert(onConflict = REPLACE)

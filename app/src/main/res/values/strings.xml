@@ -5,4 +5,5 @@
     <string name="new_note">New Note</string>
     <string name="note_hint">Write Here…</string>
     <string name="note_title">Title</string>
+    <string name="note_error_txt">Please enter some text</string>
 </resources>

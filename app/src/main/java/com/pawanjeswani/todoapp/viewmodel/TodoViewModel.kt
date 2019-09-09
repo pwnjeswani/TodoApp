@@ -10,26 +10,24 @@ import com.pawanjeswani.todoapp.model.dbtables.NoteData
 
 class TodoViewModel : ViewModel() {
 
-    var dataRepository = LocalDataRepository.instance()
+    private var dataRepository = LocalDataRepository.instance()
 
     fun saveNote(noteData: NoteData, listener: DbQueryListener) {
         dataRepository!!.insertNote(noteData, listener)
     }
 
     fun fetchNotes(): LiveData<List<NoteData>> {
-        val conversation = MutableLiveData<List<NoteData>>()
-        dataRepository!!.getAllNotes().observeForever { response ->
-            conversation.value = response
-        }
-        return conversation
+        val notes = MutableLiveData<List<NoteData>>()
+        dataRepository!!.getAllNotes().observeForever { notes.setValue(it) }
+        return notes
     }
 
     fun fetchNoteByNoteId(noteId: String): LiveData<NoteData> {
-        val conversation = MutableLiveData<NoteData>()
+        val notes = MutableLiveData<NoteData>()
         dataRepository!!.getNoteWithId(noteId).observeForever { response ->
-            conversation.value = response
+            notes.value = response
         }
-        return conversation
+        return notes
     }
 
     fun deleteNoteByNoteId(noteId: String,listener: DbQueryListener) {
