@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="@string/edit_note"
+                android:text="@string/new_note"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </RelativeLayout>
